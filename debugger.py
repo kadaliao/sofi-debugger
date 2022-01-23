@@ -17,7 +17,7 @@ def trace_lines(frame, event, arg):
     """Handler that executes with every line of code"""
 
     # We only care about *line* and *return* events
-    if event != 'line' and event != 'return':
+    if event not in ['line', 'return']:
         return
 
     # Get a reference to the code object and source
@@ -232,11 +232,11 @@ def formatsource(frame):
     """Format the source code provided with this frame an HTML representation"""
 
     # Iterate through the source code and made <div><samp></samp></div> sections for each line
-    for index, item  in enumerate(frame['source']):
+    for index, item in enumerate(frame['source']):
         d = Div()
 
         # If the line is indented, add some margin
-        if item[0:1] == '\t' or item[0:1] == ' ':
+        if item[:1] in ['\t', ' ']:
             d.style ='margin-left:15px;'
 
         # If this is the line we're currently on, add a red marker to it
